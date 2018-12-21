@@ -1,0 +1,24 @@
+PODS:
+  - Reusable (4.0.4):
+    - Reusable/Storyboard (= 4.0.4)
+    - Reusable/View (= 4.0.4)
+  - Reusable/Storyboard (4.0.4)
+  - Reusable/View (4.0.4)
+  - SwiftGen (5.3.0)
+
+DEPENDENCIES:
+  - Reusable (= 4.0.4)
+  - SwiftGen (= 5.3.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Reusable
+    - SwiftGen
+
+SPEC CHECKSUMS:
+  Reusable: 7fc772097df3e5fc86f59d8a7af9708e49b5ff55
+  SwiftGen: 4379bd3640b0a212a0f6ea3c494adba385513d10
+
+PODFILE CHECKSUM: 7e096f0bf2a44b7dd9e53aaddaade1dfb5f7b1fe
+
+COCOAPODS: 1.5.3
