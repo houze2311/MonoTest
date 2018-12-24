@@ -16,18 +16,19 @@ class ViewController: UIViewController {
     @IBOutlet private weak var leadingConstraint: NSLayoutConstraint!
     
     private var viewControllers: [UIViewController] = []
-    private var currentPage = 0
     private var readyForPresentation = false
+    
+    private var currentPage = 0
     
     private var minLeading: CGFloat = 20
     private var currentLeading: CGFloat = 0
-    private var maxValue: CGFloat = 0
+    private var interpalationValue: CGFloat = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configure()
-        leadingConstraint.constant = view.frame.width / 100 * 80
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,9 +36,17 @@ class ViewController: UIViewController {
         
         guard !readyForPresentation else { return }
         readyForPresentation = true
-        currentLeading = view.frame.width / 100 * 85
-        maxValue = currentLeading - minLeading
-        leadingConstraint.constant = currentLeading
+        
+        let initialLeading = view.frame.width / 100 * 85
+        leadingConstraint.constant = initialLeading
+        
+        setupValues(with: initialLeading)
+    }
+    
+    private func setupValues(with initialLeading: CGFloat) {
+        let maxContentOffset = scrollView.contentSize.width / CGFloat(viewControllers.count)
+        currentLeading = initialLeading - minLeading
+        interpalationValue = currentLeading / maxContentOffset
     }
     
     
@@ -99,14 +108,12 @@ extension ViewController: UIScrollViewDelegate {
             scrollView.contentOffset.y = 0
         }
         
-        let maxContentOffset = scrollView.contentSize.width / CGFloat(viewControllers.count)
-        let interpolationValue = currentLeading / maxContentOffset
-        let moveDimmention = scrollView.contentOffset.x * interpolationValue
-        currentLeading -= moveDimmention
-
-        leadingConstraint.constant = currentLeading
+        let leadingConstraintConstant = currentLeading - (scrollView.contentOffset.x * interpalationValue)
+        leadingConstraint.constant = leadingConstraintConstant
         
-        UIView.animate(withDuration: 0.2) {
+        guard leadingConstraintConstant >= minLeading else { return }
+        
+        UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
         }
     }
