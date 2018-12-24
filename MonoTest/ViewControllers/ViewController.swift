@@ -29,7 +29,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         configure()
-        leadingConstraint.constant = view.frame.width / 100 * 80
     }
     
     override func viewDidLayoutSubviews() {
